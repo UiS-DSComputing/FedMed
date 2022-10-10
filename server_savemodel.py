@@ -34,7 +34,7 @@ class SaveModelStrategy(fl.server.strategy.FedAvg):
 
             # Save aggregated_ndarrays
             print(f"Saving round {server_round} aggregated_ndarrays...")
-            np.savez(f"./global_model/modelround-{server_round}-weights.npz", *aggregated_ndarrays)
+            np.savez(f"./global_model/round-{server_round}-weights.npz", *aggregated_ndarrays)
 
         return aggregated_parameters, aggregated_metrics
 
@@ -75,7 +75,8 @@ def load_parameters_from_disk():
 
 
 # Create strategy and run server
-
+if not os.path.exists("./global_model"):
+    os.mkdir("./global_model")
 LOGDIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), "flwr_logs")
 strategy = tensorboard(logdir=LOGDIR)(SaveModelStrategy)()
 
@@ -84,7 +85,7 @@ strategy = tensorboard(logdir=LOGDIR)(SaveModelStrategy)()
 # Start Flower server
 if __name__ == "__main__":
     fl.server.start_server(
-        server_address="[::]:8081",
+        server_address="[::]:8085",
         strategy=strategy,
         config=fl.server.ServerConfig(num_rounds=3),
     )

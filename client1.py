@@ -45,7 +45,7 @@ class Net(nn.Module):
     def save_parameters(self):
         parameters = [val.cpu().numpy() for _, val in net.state_dict().items()]
         # local_model_ndarrays = fl.common.parameters_to_ndarrays(parameters)
-        np.savez(f"./local_model/local1-weights.npz", *parameters)
+        np.savez(f"local_model/local1-weights.npz", *parameters)
 
 
 def train(net, trainloader, epochs):
@@ -114,10 +114,11 @@ class FlowerClient(fl.client.NumPyClient):
 
 # Start Flower client
 fl.client.start_numpy_client(
-    server_address="127.0.0.1:8081",
+    server_address="127.0.0.1:8085",
     client=FlowerClient(),
 )
-
+if not os.path.exists("./local_model"):
+    os.mkdir("./local_model")
 net.save_parameters()
 
 # def load_parameters_from_disk():
