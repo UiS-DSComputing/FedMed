@@ -1,0 +1,6 @@
+pyproject.toml
+data/
+flwr_logs/
+local*
+round*
+
