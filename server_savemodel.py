@@ -34,7 +34,7 @@ class SaveModelStrategy(fl.server.strategy.FedAvg):
 
             # Save aggregated_ndarrays
             print(f"Saving round {server_round} aggregated_ndarrays...")
-            np.savez(f"round-{server_round}-weights.npz", *aggregated_ndarrays)
+            np.savez(f"./global_model/modelround-{server_round}-weights.npz", *aggregated_ndarrays)
 
         return aggregated_parameters, aggregated_metrics
 

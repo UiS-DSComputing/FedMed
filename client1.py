@@ -45,7 +45,7 @@ class Net(nn.Module):
     def save_parameters(self):
         parameters = [val.cpu().numpy() for _, val in net.state_dict().items()]
         # local_model_ndarrays = fl.common.parameters_to_ndarrays(parameters)
-        np.savez(f"local1-weights.npz", *parameters)
+        np.savez(f"./local_model/local1-weights.npz", *parameters)
 
 
 def train(net, trainloader, epochs):
